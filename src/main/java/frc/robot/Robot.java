@@ -29,8 +29,8 @@ public class Robot extends TimedRobot {
   private WPI_TalonSRX motor;
   private XboxController controller;
   private WPI_TalonSRX motor2;
-  private WPI_TalonSRX motorR;
-  private WPI_TalonSRX motorL;
+  private WPI_TalonSRX motorR1, motorR2, motorR3, motorR4
+  private WPI_TalonSRX motorL1, motorL2, motorL3, motorL4;
   private DifferentialDrive drive;
   private DoubleSolenoid PnuematicA;
   private Timer time;
@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
   private WPI_TalonSRX Hatch;
   private WPI_TalonSRX Cargo;
   private XboxController controller2;
+  private SpeedControllerGroup Left;
+  private SpeedControllerGroup Right;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -52,15 +54,24 @@ public class Robot extends TimedRobot {
     motor = new WPI_TalonSRX(2);
 
     motor2 = new WPI_TalonSRX(7);
-    motorR = new WPI_TalonSRX(4);
-    motorL = new WPI_TalonSRX(11);
-    drive = new DifferentialDrive(motorL,motorR);
+    motorR1 = new WPI_TalonSRX(4);
+      motorR2 = new WPI_TalonSRX(5);
+      motorR3 = new WPI_TalonSRX( 6);
+      motorR4 = new WPI_TalonSRX(7);
+    motorL1 = new WPI_TalonSRX(11);
+      motorL2 = new WPI_TalonSRX(12);
+      motorL3 = new WPI_TalonSRX(13);
+      motorL4 = new WPI_TalonSRX(14);
+      Right = new SpeedControllerGroup (motorR1, motorR2, motorR3, motorR4);
+      Left = new SpeedControllerGroup(motorL1, motorL2, motorL3, motorL4);
+    drive = new DifferentialDrive(Left,Right);
     PnuematicA = new DoubleSolenoid(5,1);
     time = new Timer();
     Hatch =new WPI_TalonSRX(10);
     Cargo = new WPI_TalonSRX(8);
     Lift = new DoubleSolenoid(4, 0);
     slide=new DoubleSolenoid(5,1);
+
 
   }
 
