@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   private WPI_TalonSRX motor;
   private XboxController controller;
   private WPI_TalonSRX motor2;
-  private WPI_TalonSRX motorR1, motorR2, motorR3, motorR4
+  private WPI_TalonSRX motorR1, motorR2, motorR3, motorR4;
   private WPI_TalonSRX motorL1, motorL2, motorL3, motorL4;
   private DifferentialDrive drive;
   private DoubleSolenoid PnuematicA;
@@ -52,8 +52,6 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     motor = new WPI_TalonSRX(2);
-
-    motor2 = new WPI_TalonSRX(7);
     motorR1 = new WPI_TalonSRX(4);
       motorR2 = new WPI_TalonSRX(5);
       motorR3 = new WPI_TalonSRX( 6);
@@ -65,7 +63,6 @@ public class Robot extends TimedRobot {
       Right = new SpeedControllerGroup (motorR1, motorR2, motorR3, motorR4);
       Left = new SpeedControllerGroup(motorL1, motorL2, motorL3, motorL4);
     drive = new DifferentialDrive(Left,Right);
-    PnuematicA = new DoubleSolenoid(5,1);
     time = new Timer();
     Hatch =new WPI_TalonSRX(10);
     Cargo = new WPI_TalonSRX(8);
@@ -147,25 +144,25 @@ public class Robot extends TimedRobot {
     if(controller.getYButtonPressed()){
       PnuematicA.set(DoubleSolenoid.Value.kForward);
     }
-    else if(controller.getBButtonPressed()){
+    else if(controller.getBButton()){
       PnuematicA.set(DoubleSolenoid.Value.kReverse);
     }
     if(controller2.getStartButtonPressed()){
       slide.set(DoubleSolenoid.Value.kForward);
       Lift.set(DoubleSolenoid.Value.kForward);
     }
-    if(controller2.getBumperPressed(GenericHID.Hand.kRight)){
+    if(controller2.getBumper(GenericHID.Hand.kRight)){
       Hatch.set(1);
     }
     else {
-      Hatch.set(controller2.getTriggerAxis(GenericHID.Hand.kRight));
+      Hatch.set(-controller2.getTriggerAxis(GenericHID.Hand.kRight));
 
     }
-    if(controller2.getBumperPressed(GenericHID.Hand.kLeft)) {
+    if(controller2.getBumper(GenericHID.Hand.kLeft)) {
       Cargo.set(0);
     }
     else{
-      Cargo.set(controller2.getTriggerAxis(GenericHID.Hand.kLeft));
+      Cargo.set(-controller2.getTriggerAxis(GenericHID.Hand.kLeft));
 
       }
     }
